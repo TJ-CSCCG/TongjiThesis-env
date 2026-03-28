@@ -1,5 +1,5 @@
 BASE=/opt
-WRITE_ENV=${BASE}/tongji-undergrad-thesis
+WRITE_ENV=${BASE}/TongjiThesis
 COMPILE_CMD="latexmk -xelatex -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape main"
 
 function get-cid() {

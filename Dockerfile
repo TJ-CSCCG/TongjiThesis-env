@@ -7,7 +7,7 @@ LABEL version="v1"
 
 # WRITE_ENV is folder to compile document
 #   by compile function, all contents will be copied here
-ENV WRITE_ENV=/opt/tongji-undergrad-thesis
+ENV WRITE_ENV=/opt/TongjiThesis
 ENV TL_MIRROR=https://mirrors.tuna.tsinghua.edu.cn/CTAN
 ENV TL_PROFILE_PATH=/tmp
 ENV TL_DIR=/tmp/texlive
@@ -43,7 +43,7 @@ RUN wget ${TL_MIRROR}/systems/texlive/tlnet/install-tl-unx.tar.gz && \
     tlmgr path add
 
 # create folder where compile function builds output file
-RUN mkdir tongji-undergrad-thesis
+RUN mkdir TongjiThesis
 WORKDIR ${WRITE_ENV}
 
 CMD [ "/bin/bash" ]
