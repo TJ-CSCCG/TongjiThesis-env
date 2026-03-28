@@ -1,0 +1,8 @@
+**/.DS_Store
+*.log
+*.aux
+*.pdf
+*.synctex.gz
+.idea/
+.vscode/
+docker-compose.override.yaml

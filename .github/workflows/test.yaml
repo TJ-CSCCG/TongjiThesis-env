@@ -1,19 +1,32 @@
 on:
   push:
+    branches: [master]
+    paths: [Dockerfile]
   pull_request:
-    branches:
-      - master
+    branches: [master]
+  workflow_dispatch:
 
-name: test docker image
+name: test
 
 jobs:
-  docker-compose:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: checkout
+      - name: Checkout
         uses: actions/checkout@v6
-      -
-        name: run container
+
+      - name: Build image from Dockerfile
+        run: docker compose build
+
+      - name: Start container
+        run: docker compose up -d
+
+      - name: Verify key binaries
         run: |
-          docker compose up -d
+          docker exec tongjithesis-env xelatex --version
+          docker exec tongjithesis-env latexmk --version
+          docker exec tongjithesis-env biber --version
+
+      - name: Stop container
+        if: always()
+        run: docker compose down

@@ -1,49 +1,41 @@
-FROM ubuntu:latest
+FROM texlive/texlive:latest-minimal
 
-# Docker image: tut-env:v1
-LABEL organization="TJ-CSCCG"
-LABEL maintainer="skyleaworlder"
-LABEL version="v1"
+LABEL org.opencontainers.image.source="https://github.com/TJ-CSCCG/TongjiThesis-env"
+LABEL org.opencontainers.image.description="Docker environment for TongjiThesis"
 
-# WRITE_ENV is folder to compile document
-#   by compile function, all contents will be copied here
 ENV WRITE_ENV=/opt/TongjiThesis
-ENV TL_MIRROR=https://mirrors.tuna.tsinghua.edu.cn/CTAN
-ENV TL_PROFILE_PATH=/tmp
-ENV TL_DIR=/tmp/texlive
-ENV TL_BIN=${TL_DIR}/bin/x86_64-linux
-ENV TL_PACKAGES="adjustbox algorithmicx algorithms biber biblatex biblatex-gb7714-2015 bibtex booktabs caption carlisle cases catchfile chinese-jfm chngcntr cleveref collectbox ctex dvips enumitem environ extarrows fancybox fancyhdr fancyvrb float framed fvextra gbt7714 gsftopk helvetic hologo ifplatform lastpage latexmk lineno minted multirow mwe natbib needspace newtx nth oberdiek pdftexcmds realscripts rsfs setspace siunitx subfig tcolorbox texcount texliveonfly threeparttable threeparttablex times titling tocloft trimspaces txfonts ucs upquote was xcolor xecjk xstring zhnumber"
-ENV PATH=${PATH}:${TL_BIN}
-WORKDIR /opt
 
-# install necessary packages
-# thank sjtug & tuna
-RUN sed -i 's/http:\/\/archive.ubuntu.com/http:\/\/mirror.sjtu.edu.cn/g' /etc/apt/sources.list && \
-    apt-get update
-RUN apt-get install -y git \
-        perl \
-        wget \
-        libfontconfig \
-        python3 \
-        pipx && \
-    rm -rf /var/lib/apt/lists/* && \
-    apt-get clean
-RUN pipx install Pygments -i https://pypi.tuna.tsinghua.edu.cn/simple
+# Package list mirrors .github/workflows/test.yaml in TongjiThesis
+# Uses TeX Live names (not CTAN); subcaption.sty is part of "caption"
+ENV TL_PACKAGES="\
+    adjustbox algorithmicx algorithms \
+    biber biblatex biblatex-gb7714-2015 bibtex booktabs \
+    caption carlisle cases catchfile chinese-jfm chngcntr \
+    circledsteps cleveref collectbox ctex dvips \
+    enumitem environ eso-pic extarrows \
+    fancyhdr fancyvrb float framed fvextra \
+    gbt7714 gsftopk helvetic hologo ifplatform \
+    lastpage latexmk lineno listings minted multirow mwe \
+    natbib needspace newtx nth oberdiek \
+    pdftexcmds pgf pict2e picture realscripts rsfs \
+    setspace siunitx tcolorbox texcount texliveonfly \
+    threeparttable threeparttablex times titling tocloft \
+    trimspaces txfonts ucs upquote was \
+    xcolor xecjk xpatch xstring zhnumber"
 
-# download & install TeXLive
-COPY texlive.profile ${TL_PROFILE_PATH}
-RUN wget ${TL_MIRROR}/systems/texlive/tlnet/install-tl-unx.tar.gz && \
-    tar -xzf install-tl-unx.tar.gz && \
-    cd install-tl-20* && \
-    ./install-tl --profile ${TL_PROFILE_PATH}/texlive.profile && \
-    rm -rf install-tl-* && \
-    tlmgr option repository ${TL_MIRROR}/systems/texlive/tlnet && \
-    tlmgr install ${TL_PACKAGES} && \
-    tlmgr update --self --all --no-auto-install && \
-    tlmgr path add
+# Sync database, install packages (tlmgr resolves dependencies automatically),
+# then verify key binaries
+RUN tlmgr update --self \
+  && tlmgr install ${TL_PACKAGES} \
+  && tlmgr path add \
+  && xelatex --version && latexmk --version && biber --version
 
-# create folder where compile function builds output file
-RUN mkdir TongjiThesis
+# Pygments for minted code highlighting
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends python3-pygments \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p ${WRITE_ENV}
 WORKDIR ${WRITE_ENV}
 
 CMD [ "/bin/bash" ]

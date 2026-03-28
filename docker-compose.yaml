@@ -1,6 +1,6 @@
-version: '3'
 services:
-  tut-env:
-    container_name: tut-env
-    image: skyleaworlder/tut-env:v1
+  tongjithesis:
+    container_name: tongjithesis-env
+    build: .
+    image: ghcr.io/tj-csccg/tongjithesis-env:latest
     tty: true
