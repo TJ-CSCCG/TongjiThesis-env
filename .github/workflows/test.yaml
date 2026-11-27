@@ -27,6 +27,29 @@ jobs:
           docker exec tongjithesis-env latexmk --version
           docker exec tongjithesis-env biber --version
 
+      # A package missing from the image only shows when the template compiles,
+      # so build the thesis and the three forms of the released template inside it.
+      - name: Check out TongjiThesis
+        uses: actions/checkout@v6
+        with:
+          repository: TJ-CSCCG/TongjiThesis
+          ref: master
+          path: thesis
+
+      - name: Compile TongjiThesis in the container
+        run: |
+          docker cp thesis/. tongjithesis-env:/opt/TongjiThesis/
+          for doc in main taskbook proposal midterm; do
+            echo "::group::$doc"
+            docker exec -w /opt/TongjiThesis tongjithesis-env \
+              latexmk -xelatex -interaction=nonstopmode -file-line-error -halt-on-error -shell-escape "$doc"
+            echo "::endgroup::"
+          done
+
+      - name: Show the failing log
+        if: failure()
+        run: docker exec -w /opt/TongjiThesis tongjithesis-env bash -c 'for f in *.log; do echo "== $f"; tail -n 40 "$f"; done'
+
       - name: Stop container
         if: always()
         run: docker compose down
