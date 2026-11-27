@@ -37,6 +37,7 @@ jobs:
           path: thesis
 
       - name: Compile TongjiThesis in the container
+        id: compile
         run: |
           docker cp thesis/. tongjithesis-env:/opt/TongjiThesis/
           for doc in main taskbook proposal midterm; do
@@ -47,7 +48,7 @@ jobs:
           done
 
       - name: Show the failing log
-        if: failure()
+        if: failure() && steps.compile.outcome == 'failure'
         run: docker exec -w /opt/TongjiThesis tongjithesis-env bash -c 'for f in *.log; do echo "== $f"; tail -n 40 "$f"; done'
 
       - name: Stop container
