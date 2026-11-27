@@ -25,9 +25,14 @@ ENV TL_PACKAGES="\
     xstring zhnumber"
 
 # Sync database, install packages (tlmgr resolves dependencies automatically),
-# then verify key binaries
-RUN tlmgr update --self \
-  && tlmgr install ${TL_PACKAGES} \
+# then verify key binaries. mirror.ctan.org sends each tlmgr run to a random
+# mirror, and some mirrors lag or fail TLS, so a failed attempt is retried and
+# lands on another mirror; the third failure fails the build.
+RUN for attempt in 1 2 3; do \
+      tlmgr update --self && tlmgr install ${TL_PACKAGES} && break; \
+      if [ "$attempt" = 3 ]; then exit 1; fi; \
+      echo "tlmgr failed on attempt $attempt; retrying on another mirror"; sleep 10; \
+    done \
   && tlmgr path add \
   && xelatex --version && latexmk --version && biber --version
 
