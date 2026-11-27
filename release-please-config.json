@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "include-component-in-tag": false,
+  "packages": {
+    ".": {
+      "release-type": "simple",
+      "changelog-sections": [
+        { "type": "feat", "section": "新增 | New Features" },
+        { "type": "fix", "section": "修正 | Fixes" },
+        { "type": "docs", "section": "文档与维护 | Docs & Maintenance" },
+        { "type": "chore", "section": "文档与维护 | Docs & Maintenance" },
+        { "type": "ci", "section": "文档与维护 | Docs & Maintenance" },
+        { "type": "build", "section": "文档与维护 | Docs & Maintenance" }
+      ]
+    }
+  }
+}

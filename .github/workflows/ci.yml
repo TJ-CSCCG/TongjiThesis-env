@@ -6,7 +6,7 @@ on:
     branches: [master]
   workflow_dispatch:
 
-name: test
+name: CI
 
 jobs:
   build-and-test:

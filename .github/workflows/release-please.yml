@@ -1,0 +1,36 @@
+name: Release PR
+
+# Maintains a release PR from Conventional Commits on master (version.txt and
+# CHANGELOG.md). Merging it creates the v* tag and the GitHub release, which
+# starts publish.yml to build and push the image.
+#
+# Auth: the org's GitHub App token (secrets APP_ID and APP_PRIVATE_KEY), so the
+# release it creates can trigger publish.yml.
+
+on:
+  push:
+    branches: [master]
+
+permissions: {}
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Mint GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Run release-please
+        uses: googleapis/release-please-action@v5
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json

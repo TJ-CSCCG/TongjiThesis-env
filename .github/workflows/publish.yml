@@ -1,8 +1,11 @@
-name: release
+name: Publish
 
+# Builds the image and pushes it to GHCR when a release is published.
+# release-please.yml creates the release (and its v* tag) when its release PR
+# is merged; a manual run republishes the image for the ref it is run on.
 on:
-  push:
-    tags: ['v*']
+  release:
+    types: [published]
   workflow_dispatch:
 
 env:

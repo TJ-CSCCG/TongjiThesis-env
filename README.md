@@ -1,7 +1,7 @@
 <h1 align="center">TongjiThesis-env</h1>
 
 <p align="center">
-  <a href="https://github.com/TJ-CSCCG/TongjiThesis-env/actions/workflows/test.yaml"><img src="https://github.com/TJ-CSCCG/TongjiThesis-env/actions/workflows/test.yaml/badge.svg" alt="test"></a>
+  <a href="https://github.com/TJ-CSCCG/TongjiThesis-env/actions/workflows/ci.yml"><img src="https://github.com/TJ-CSCCG/TongjiThesis-env/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="https://github.com/TJ-CSCCG/TongjiThesis-env/pkgs/container/tongjithesis-env"><img src="https://img.shields.io/badge/GHCR-tongjithesis--env-blue?logo=github" alt="GHCR"></a>
   <a href="https://github.com/TJ-CSCCG/TongjiThesis"><img src="https://img.shields.io/badge/Template-TongjiThesis-teal" alt="TongjiThesis"></a>
 </p>
