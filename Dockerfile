@@ -8,7 +8,7 @@ ENV WRITE_ENV=/opt/TongjiThesis
 # Package list mirrors TL_PACKAGES in TongjiThesis's .github/workflows/test.yaml;
 # the test workflow compiles the template in the image to catch a missing one.
 # Uses TeX Live names (not CTAN): subcaption.sty is part of "caption", and
-# tabularx.sty and xspace.sty are part of "tools", which ctex depends on.
+# tabularx.sty and xspace.sty are part of "tools".
 ENV TL_PACKAGES="\
     adjustbox algorithm2e algorithmicx algorithms alphalph biber \
     biblatex biblatex-gb7714-2015 bibtex booktabs caption \
@@ -21,7 +21,7 @@ ENV TL_PACKAGES="\
     pgf pict2e picture realscripts relsize rsfs setspace siunitx \
     tcolorbox tex-gyre texcount texliveonfly \
     threeparttable threeparttablex times titling tocloft \
-    trimspaces txfonts ucs upquote was xcolor xecjk xpatch \
+    tools trimspaces txfonts ucs upquote was xcolor xecjk xpatch \
     xstring zhnumber"
 
 # Sync database, install packages (tlmgr resolves dependencies automatically),
