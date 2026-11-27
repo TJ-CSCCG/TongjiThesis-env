@@ -5,7 +5,7 @@ LABEL org.opencontainers.image.description="Docker environment for TongjiThesis"
 
 ENV WRITE_ENV=/opt/TongjiThesis
 
-# Package list mirrors TL_PACKAGES in TongjiThesis's .github/workflows/test.yaml;
+# Package list mirrors TongjiThesis's .github/tl-packages.txt;
 # the test workflow compiles the template in the image to catch a missing one.
 # Uses TeX Live names (not CTAN): subcaption.sty is part of "caption", and
 # tabularx.sty and xspace.sty are part of "tools".
