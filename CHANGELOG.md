@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/TJ-CSCCG/TongjiThesis-env/compare/v2.0.1...v2.0.2) (2026-11-27)
+
+
+### 修正 | Fixes
+
+* retry tlmgr when mirror.ctan.org picks a broken mirror ([#18](https://github.com/TJ-CSCCG/TongjiThesis-env/issues/18)) ([a1c9e50](https://github.com/TJ-CSCCG/TongjiThesis-env/commit/a1c9e5034abc9337a6b15fda72ba324de9cb5fac))
+
 ## [2.0.1](https://github.com/TJ-CSCCG/TongjiThesis-env/compare/v2.0.0...v2.0.1) (2026-11-27)
 
 
