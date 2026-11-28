@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/TJ-CSCCG/TongjiThesis-env/compare/v2.0.2...v2.0.3) (2026-11-28)
+
+
+### 修正 | Fixes
+
+* install the package list the template itself declares ([#20](https://github.com/TJ-CSCCG/TongjiThesis-env/issues/20)) ([3013e1a](https://github.com/TJ-CSCCG/TongjiThesis-env/commit/3013e1a5e4c731be4c301f86fbff0fa3b05e86a8))
+
 ## [2.0.2](https://github.com/TJ-CSCCG/TongjiThesis-env/compare/v2.0.1...v2.0.2) (2026-11-27)
 
 
